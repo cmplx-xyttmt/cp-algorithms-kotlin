@@ -6,6 +6,11 @@ package strings
  * Takes in a string and returns an integer that is the hash of the string.
  * This function is called a "polynomial rolling hash function".
  *
+ * Some applications:
+ *  - Used in the Rabin-Karp algorithm for string matching in O(n).
+ *  - Calculating number of different substrings of a string in O(n^2log n).
+ *  - Calculating number of palindromic substrings in a string.
+ *
  * @param string: the string to be hashed.
  * @param p: a prime that is roughly equal to the number of characters in the input alphabet. Default value is 31 assuming an alphabet containing only lowercase english characters, need to update depending on size of alphabet.
  * @param m: modulus (probability of hash collision is 1/m), a good choice for this is a large prime number. Default value is 1e9 + 9.

@@ -9,4 +9,9 @@ class TestUsefulFunctions {
         assertEquals(614254, computeHash("test"))
         assertEquals(952913702, computeHash("ahdhaweqweqdadawdw"))
     }
+
+    @Test fun testCountUniqueSubstrings() {
+        assertEquals(9, computeUniqueSubstrings("test"))
+        assertEquals(23, computeUniqueSubstrings("aaadawd"))
+    }
 }

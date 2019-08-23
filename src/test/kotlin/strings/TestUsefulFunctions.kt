@@ -14,4 +14,10 @@ class TestUsefulFunctions {
         assertEquals(9, computeUniqueSubstrings("test"))
         assertEquals(23, computeUniqueSubstrings("aaadawd"))
     }
+
+    @Test fun testRabinKarp() {
+        assertEquals(listOf(0, 5, 10), rabinKarp("ab", "abdadabdwdab"))
+        assertEquals(listOf(), rabinKarp("adashda", "adashd"))
+        assertEquals(listOf(0), rabinKarp("adashda", "adashda"))
+    }
 }

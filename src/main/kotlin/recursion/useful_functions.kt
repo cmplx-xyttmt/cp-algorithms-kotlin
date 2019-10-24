@@ -49,3 +49,35 @@ fun permutations(n: Int): List<List<Int>> {
 
     return permutations.toList()
 }
+
+/**
+ * Returns the permutation following prevPerm in lexicographic order.
+ * If there's no following permutation, returns an empty list.
+ */
+fun nextPermutation(prevPerm: List<Int>): List<Int> {
+    var changeIndex = -1
+    val nextPerm = prevPerm.toMutableList()
+    nextPerm.forEachIndexed { index, num ->
+        if (index < nextPerm.size - 1 && nextPerm[index + 1] > num) changeIndex = index
+    }
+
+    if (changeIndex == -1) return listOf()
+    var nextGreaterIndex = changeIndex
+    ((changeIndex + 1) until prevPerm.size).forEach {
+        if (prevPerm[it] > prevPerm[changeIndex]) nextGreaterIndex = it
+    }
+
+    if (changeIndex == nextGreaterIndex) return listOf()
+
+    nextPerm[changeIndex] = nextPerm[nextGreaterIndex].also { nextPerm[nextGreaterIndex] = nextPerm[changeIndex] }
+
+    var last = prevPerm.size - 1
+    changeIndex++
+    while (changeIndex < last) {
+        nextPerm[changeIndex] = nextPerm[last].also { nextPerm[last] = nextPerm[changeIndex] }
+        changeIndex++
+        last--
+    }
+
+    return nextPerm.toList()
+}

@@ -20,4 +20,13 @@ class TestUsefulFunctions {
         assertEquals(listOf(listOf(1, 2, 3), listOf(1, 3, 2), listOf(2, 1, 3), listOf(2, 3, 1),
             listOf(3, 1, 2), listOf(3, 2, 1)), permutations(3))
     }
+
+    @Test fun testNextPermutation() {
+        var perm = listOf(1, 2, 3, 4)
+        val permutations = permutations(4).iterator()
+        while (perm.isNotEmpty()) {
+            assertEquals(permutations.next(), perm)
+            perm = nextPermutation(perm)
+        }
+    }
 }

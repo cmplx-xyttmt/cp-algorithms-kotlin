@@ -3,7 +3,7 @@ package recursion
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class TestUsefulFunctions {
+class TestSubsetsPermutations {
 
     @Test fun testSubsets() {
         assertEquals(listOf(listOf()), subsets(0))

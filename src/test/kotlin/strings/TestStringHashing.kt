@@ -3,7 +3,7 @@ package strings
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class TestUsefulFunctions {
+class TestStringHashing {
 
     @Test fun testComputeHash() {
         assertEquals(614254, computeHash("test"))

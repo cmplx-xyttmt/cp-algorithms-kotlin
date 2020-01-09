@@ -22,3 +22,22 @@ fun keyIndexedCounting(items: List<Int>, r: Int): List<Int> {
 
     return aux.toList()
 }
+
+/**
+ * Sorts a list of strings based on their leading W characters.
+ *
+ * @param items list of strings to be sorted. (all strings are expected to be of the same length for this implementation)
+ * @param W number of leading characters that determine the sort.
+ */
+fun lsdSort(items: MutableList<String>, W: Int): List<String> {
+    val r = 256
+    val aux = MutableList(items.size) { "" }
+    (W - 1 downTo 0).forEach { d ->
+        val count = MutableList(r + 1) { 0 }
+        items.forEach { count[(it[d] + 1).toInt()]++ } // Compute frequency counts
+        count.forEachIndexed { index, freq -> if (index < r) count[index + 1] += freq } // Transform counts to indices
+        items.forEach { aux[count[it[d].toInt()]++] = it } // Distribute
+        aux.forEachIndexed { index, s -> items[index] = s } // Copy back
+    }
+    return items
+}

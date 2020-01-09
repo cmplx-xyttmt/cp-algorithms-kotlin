@@ -41,3 +41,53 @@ fun lsdSort(items: MutableList<String>, W: Int): List<String> {
     }
     return items
 }
+
+/**
+ * Sorts a list of strings (doesn't need the strings to all be of the same length) using Most Significant Digit sort.
+ *
+ * @param items list of strings to be sorted.
+ */
+fun msdSort(items: MutableList<String>): List<String> {
+    val aux = MutableList(items.size) { "" }
+    val r = 256
+
+    fun String.charAtMod(d: Int): Int {
+        return if (d < length) this[d].toInt() else -1
+    }
+
+    /**
+     * Used to terminate the msd sort when the array is small enough
+     */
+    fun insertionSort(items: MutableList<String>, lo: Int, hi: Int, d: Int) {
+        (lo..hi).forEach { i ->
+            var j = i
+            while (j > lo && items[j].substring(d) < items[j - 1].substring(d)) {
+                items[j] = items[j - 1].also { items[j - 1] = items[j] }
+                j--
+            }
+        }
+    }
+
+    /**
+     * Recursive helper for the MSD sort. Sorts from items[lo] to items[hi], starting at the [d] character.
+     *
+     * @param items list of strings being sorted
+     * @param m cutoff for small sub-arrays
+     */
+    fun msdSortHelper(items: MutableList<String>, lo: Int, hi: Int, d: Int, m: Int = 0) {
+        if (hi <= lo + m) {
+            insertionSort(items, lo, hi, d)
+            return
+        }
+        val count = MutableList(r + 2) { 0 }
+        (lo..hi).forEach { count[items[it].charAtMod(d) + 2]++ }
+        count.forEachIndexed { index, freq -> if (index < r) count[index + 1] += freq }
+        (lo..hi).forEach { aux[count[items[it].charAtMod(d) + 1]++] = items[it] }
+        (lo..hi).forEach { items[it] = aux[it - lo] }
+        // Recursively sort for each character value
+        (0 until r).forEach { msdSortHelper(items, lo + count[it], lo + count[it + 1] - 1, d + 1) }
+    }
+
+    msdSortHelper(items, 0, items.size - 1, 0, 15)
+    return items
+}

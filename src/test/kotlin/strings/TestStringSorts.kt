@@ -15,4 +15,10 @@ class TestStringSorts {
             "3CIO720", "1OHV845", "1OHV845", "2RLA629", "2RLA629", "3ATW723")
         assertEquals(toSort.sorted(), lsdSort(toSort.toMutableList(), 7))
     }
+
+    @Test fun testMsdSort() {
+        val toSort = listOf("she", "sells", "seashells", "by", "the", "seashore", "the", "shells", "she",
+            "sells", "are", "surely", "seashells")
+        assertEquals(toSort.sorted(), msdSort(toSort.toMutableList()))
+    }
 }

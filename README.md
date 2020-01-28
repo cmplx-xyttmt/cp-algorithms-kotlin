@@ -20,6 +20,8 @@ Below are some resources I used to learn about the different algorithms in this 
 - String Hashing (Read more [here](https://cp-algorithms.com/string/string-hashing.html))
 - Rabin Karp Algorithm (Read  more [here](https://cp-algorithms.com/string/rabin-karp.html) and [here](https://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm))
 - Key Indexed Counting a.k.a Counting sort (Read more in Section 5.1 of [Algorithms](https://algs4.cs.princeton.edu/home/) and [here](https://algs4.cs.princeton.edu/51radix/))
+- LSD and MSD Sort (Read more in Section 5.1 of [Algorithms](https://algs4.cs.princeton.edu/home/))
+- Trie (Read more in Section 5.2 of [Algorithms](https://algs4.cs.princeton.edu/home/))
 
 #### Recursion
 - Subsets and Permutations (Read more in Section 2.2 of [Competitive Programmers Handbook](https://cses.fi/book.pdf))

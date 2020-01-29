@@ -4,6 +4,7 @@ class Trie<Value>(val R: Int = 26, private val minChar: Char = 'a') {
     private var root: Node? = null
     inner class Node(var value: Value? = null) {
         val next = MutableList<Node?>(R) { null }
+        var size = 0
     }
 
     fun get(key: String): Value? {
@@ -31,10 +32,13 @@ class Trie<Value>(val R: Int = 26, private val minChar: Char = 'a') {
         val x = xx ?: Node()
         if (d == key.length) {
             x.value = value
+            x.size++
             return x
         }
         val c = key[d] - minChar
+        x.size -= x.next[c]?.size ?: 0
         x.next[c] = put(x.next[c], key, value, d + 1)
+        x.size += x.next[c]?.size ?: 0
         return x
     }
 
@@ -68,5 +72,14 @@ class Trie<Value>(val R: Int = 26, private val minChar: Char = 'a') {
         if (d == s.length) return length
         val c = s[d] - minChar
         return search(x.next[c], s, d + 1, length)
+    }
+
+    fun size(): Int {
+        return numOfStringsWithPrefix("")
+    }
+
+    fun numOfStringsWithPrefix(pre: String): Int {
+        val node = get(root, pre, 0)
+        return node?.size ?: 0
     }
 }

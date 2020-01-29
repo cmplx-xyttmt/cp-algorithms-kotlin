@@ -26,5 +26,12 @@ class TestTrie {
         assertEquals("she", trie.longestPrefixOf("she"))
         assertEquals("shells", trie.longestPrefixOf("shellsort"))
         assertEquals("she", trie.longestPrefixOf("shelters"))
+
+        // Test size of trie
+        assertEquals(trieKeys.size, trie.size())
+
+        // Test num of Strings with prefix
+        assertEquals(3, trie.numOfStringsWithPrefix("she"))
+        assertEquals(4, trie.numOfStringsWithPrefix("sea"))
     }
 }

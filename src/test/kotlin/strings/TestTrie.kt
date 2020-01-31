@@ -33,5 +33,10 @@ class TestTrie {
         // Test num of Strings with prefix
         assertEquals(3, trie.numOfStringsWithPrefix("she"))
         assertEquals(4, trie.numOfStringsWithPrefix("sea"))
+
+        // Test contains prefix of
+        assertEquals(true, trie.containsPrefixOf("then"))
+        assertEquals(false, trie.containsPrefixOf("algorithms"))
+        assertEquals(false, trie.containsPrefixOf("shirt"))
     }
 }

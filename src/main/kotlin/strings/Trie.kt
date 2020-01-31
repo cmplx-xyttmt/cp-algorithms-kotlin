@@ -82,4 +82,18 @@ class Trie<Value>(val R: Int = 26, private val minChar: Char = 'a') {
         val node = get(root, pre, 0)
         return node?.size ?: 0
     }
+
+    /**
+     * Determines if there is a string in the trie that is a prefix of s
+     */
+    fun containsPrefixOf(s: String): Boolean {
+        return hasPrefix(root, s, 0)
+    }
+
+    private fun hasPrefix(node: Node?, s: String, d: Int): Boolean {
+        if (node == null) return false
+        if (node.value != null) return true
+        if (d == s.length) return node.value == null
+        return hasPrefix(node.next[s[d] - minChar], s, d + 1)
+    }
 }

@@ -102,4 +102,36 @@ class TestNumberTheory {
         assertFalse(isPerfectNumber(75))
         assertFalse(isPerfectNumber(12))
     }
+
+    @Test
+    fun testExtendedGcd() {
+        val a = listOf(30, 3, 2, 45, 67, 89, 67, 48490397)
+        val b = listOf(12, 2, 5, 67, 78, 90, 10, 813575028)
+
+        for (i in a.indices) {
+            val (x, y, g) = extendedGcd(a[i], b[i])
+            assertEquals(x * a[i] + y * b[i], g)
+        }
+    }
+
+    @Test
+    fun testModPow() {
+        val m = 10L.pow(9) + 7
+        val x = listOf(1L, 2, 3, 7, 9, 10)
+        val n = listOf(8, 7, 18, 19, 10, 7)
+
+        for (i in x.indices) {
+            assertEquals(modPow(x[i], n[i], m), x[i].pow(n[i]) % m)
+        }
+    }
+
+    @Test
+    fun testModInverse() {
+        val x = listOf(1L, 2, 3, 17, 19, 20, 17, 10008, 999999)
+        val m = listOf(17L, 17, 2, 5, 89, 19, 29, 71, 10L.pow(9) + 7)
+
+        for (i in x.indices) {
+            assertEquals((x[i] * modInverse(x[i], m[i])) % m[i], 1)
+        }
+    }
 }

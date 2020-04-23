@@ -1,8 +1,8 @@
 package math
 
-import kotlin.math.pow
+import java.math.BigInteger
 
-fun Long.pow(exp: Int) = this.toDouble().pow(exp).toLong()
+fun Long.pow(exp: Int) = BigInteger.valueOf(this).pow(exp).toLong()
 
 /**
  * Determines if the number n is prime
@@ -109,3 +109,38 @@ fun sumOfFactors(n: Long): Long {
 fun isPerfectNumber(n: Long): Boolean {
     return n == sumOfFactors(n) - n
 }
+
+/**
+ * Using the Extended Euclid's Algorithm to find integers x and y for which ax + by = gcd(a, b)
+ * returns the list [x, y, g]
+ */
+fun extendedGcd(a: Int, b: Int): List<Int> {
+    return if (b == 0) listOf(1, 0, a)
+    else {
+        val (x, y, g) = extendedGcd(b, a % b)
+        listOf(y, x - (a / b) * y, g)
+    }
+}
+
+/**
+ * Modular exponentiation: calculates x ^ n mod m in O(log n) time
+ */
+fun modPow(x: Long, n: Int, m: Long): Long {
+    if (n == 0) return 1 % m
+    var u = modPow(x, n / 2, m)
+    u = (u * u) % m
+    if (n % 2 == 1) u = (u * x) % m
+    return u
+}
+
+/**
+ * Modular inverse: Uses x ^ (phi(m) - 1) to calculate the modular inverse of x mod m.
+ * (Remember, the modular inverse only exists when x and m are co-prime)
+ * If m is prime, eulerTotient(m).toInt() - 1 can be replaced by m - 2.
+ */
+fun modInverse(x: Long, m: Long): Long {
+    return modPow(x, eulerTotient(m).toInt() - 1, m)
+}
+
+// TODO: Read section on solving equations and chinese remainder theorem.
+//  TODO: Also read this blog (https://codeforces.com/blog/entry/61290) for more info and problems on the same.

@@ -18,4 +18,26 @@ class TestSuffixArray {
             assertEquals(list, suffixArray(s))
         }
     }
+
+    @Test
+    fun testSubstringSearch() {
+        val t = "ynmxqxdftrqravcnpmikkxtezdtklbymaimnmxpyejtyuwicyfhmswdpxqydjhyzulumabcxblqdhhcepgbzrynieqdopmr"
+        val strings = mapOf(
+            "suknlb" to false,
+            "ezdtklb" to true,
+            "auksrkdpor" to false,
+            "cpmxtp" to false,
+            "censmxpyjhrkv" to false,
+            "pcymldublngpqpxqrnev" to false,
+            "qydjhyzulu" to true,
+            "npmikkxtezdtklbymaim" to true,
+            "maimnmxp" to true
+        )
+
+        val tSuffixArray = suffixArray(t)
+
+        strings.forEach { (s, can) ->
+            assertEquals(can, substringSearch(t, s, tSuffixArray))
+        }
+    }
 }

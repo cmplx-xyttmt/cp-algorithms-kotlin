@@ -72,3 +72,33 @@ fun numberOfDifferentSubstrings(t: String): Long {
 
     return ans
 }
+
+/**
+ * Gets the longest common substring of s and t
+ *
+ * @param s first string
+ * @param t second string
+ * @return longest common substring of s and t
+ */
+fun longestCommonSubstring(s: String, t: String): String {
+    val combined = "$s%$t"
+    val sRange = s.indices
+    val tRange = (s.length + 1) until combined.length
+    val suffixArray = suffixArray(combined)
+    val lcp = calcLCP(combined, suffixArray)
+
+    var maxCommon = 0
+    var maxSuffix = -1
+    for (i in 1 until suffixArray.size - 1) {
+        val suffix = suffixArray[i]
+        val nextSuffix = suffixArray[i + 1]
+        if ((suffix in sRange && nextSuffix in tRange) || (suffix in tRange && nextSuffix in sRange)) {
+            if (lcp[i] > maxCommon) {
+                maxCommon = lcp[i]
+                maxSuffix = suffix
+            }
+        }
+    }
+
+    return if (maxCommon == 0) "" else combined.substring(maxSuffix until (maxCommon + maxSuffix))
+}

@@ -71,4 +71,19 @@ class TestSuffixArray {
             assertEquals(substrings, numberOfDifferentSubstrings(s))
         }
     }
+
+    @Test
+    fun testLongestCommonSubstring() {
+        val stringsToCommon = mutableMapOf(
+            Pair("bababb", "zabacabba") to "aba",
+            Pair("qrdq", "rqqqrdqrqd") to "qrdq",
+            Pair("hhhhhh", "hhhhhhh") to "hhhhhh",
+            Pair("opopo", "ppppopopo") to "opopo"
+        )
+
+        stringsToCommon.forEach { (pair, common) ->
+            val (s, t) = pair
+            assertEquals(common, longestCommonSubstring(s, t))
+        }
+    }
 }

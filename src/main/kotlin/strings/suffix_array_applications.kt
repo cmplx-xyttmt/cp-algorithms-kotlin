@@ -1,5 +1,6 @@
 package strings
 
+import kotlin.math.max
 import kotlin.math.min
 
 /**
@@ -25,4 +26,33 @@ fun substringSearch(t: String, s: String, tSuffixArray: List<Int>): Boolean {
         else start = mid
     }
     return can
+}
+
+/**
+ * The LCP(i, j) is the length of the largest common prefix for suffixes starting at i and j
+ * This function returns an array lcp where lcp[ i ] = LCP(p[ i ], p[i + 1]) i.e the lcp of 2 consecutive suffixes in the suffix array.
+ *
+ * @param t the string
+ * @param suffixArray suffix array of t
+ * @return the lcp array as described above
+ */
+fun calcLCP(t: String, suffixArray: List<Int>): IntArray {
+    val s = "${t}$"
+    val n = s.length
+    val lcp = IntArray(n - 1)
+    val positions = IntArray(n)
+    suffixArray.forEachIndexed { index, suff ->
+        positions[suff] = index
+    }
+
+    var k = 0
+    for (i in 0 until n - 1) {
+        val position = positions[i]
+        val j = suffixArray[position - 1]
+        while (s[i + k] == s[j + k]) k++
+        lcp[position - 1] = k
+        k = max(k - 1, 0)
+    }
+
+    return lcp
 }

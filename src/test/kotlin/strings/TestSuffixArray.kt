@@ -40,4 +40,19 @@ class TestSuffixArray {
             assertEquals(can, substringSearch(t, s, tSuffixArray))
         }
     }
+
+    @Test
+    fun testLCP() {
+        val stringsToLCP = mutableMapOf(
+            "ababba" to listOf(0, 1, 2, 0, 2, 1),
+            "aaaa" to listOf(0, 1, 2, 3),
+            "ppppplppp" to listOf(0, 0, 1, 1, 2, 2, 3, 3, 4),
+            "nn" to listOf(0, 1),
+            "jjqjjqujjq" to listOf(0, 3, 3, 1, 2, 2, 0, 1, 1, 0)
+        )
+
+        stringsToLCP.forEach { (s, lcp) ->
+            assertEquals(lcp, calcLCP(s, suffixArray(s)).toList())
+        }
+    }
 }

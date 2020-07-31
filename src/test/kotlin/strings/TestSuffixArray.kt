@@ -55,4 +55,20 @@ class TestSuffixArray {
             assertEquals(lcp, calcLCP(s, suffixArray(s)).toList())
         }
     }
+
+    @Test
+    fun testNumberOfDifferentSubstrings() {
+        val stringsToSubstrings = mutableMapOf(
+            "ababba" to 15L,
+            "mmuc" to 9L,
+            "xmnnnuu" to 24L,
+            "nnnn" to 4L,
+            "xisiis" to 17L,
+            "yymyfmyy" to 29L
+        )
+
+        stringsToSubstrings.forEach { (s, substrings) ->
+            assertEquals(substrings, numberOfDifferentSubstrings(s))
+        }
+    }
 }

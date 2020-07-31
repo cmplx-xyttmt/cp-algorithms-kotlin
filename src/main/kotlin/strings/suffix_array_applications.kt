@@ -56,3 +56,19 @@ fun calcLCP(t: String, suffixArray: List<Int>): IntArray {
 
     return lcp
 }
+
+/**
+ * Calculating the number of different substrings of a string using a suffix array
+ * @param t the input string
+ * @return number of different substrings of t
+ */
+fun numberOfDifferentSubstrings(t: String): Long {
+    val tSuffix = suffixArray(t)
+    val lcp = calcLCP(t, tSuffix)
+    var ans = 0L
+    for (i in 1 until tSuffix.size) {
+        ans += t.length - tSuffix[i] - lcp[i - 1]
+    }
+
+    return ans
+}

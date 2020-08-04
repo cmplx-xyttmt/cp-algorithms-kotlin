@@ -1,7 +1,9 @@
 package data_structures
 
+import math.gcd
 import org.junit.Test
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.test.assertEquals
 
 class TestStaticRangeQueries {
@@ -57,30 +59,37 @@ class TestStaticRangeQueries {
     }
 
     @Test
-    fun testSparseTableMax() {
-        val function = { a: Int, b: Int -> max(a, b) }
+    fun testSparseTable() {
+        val maxFunction = { a: Int, b: Int -> max(a, b) }
+        val minFunction = { a: Int, b: Int -> min(a, b) }
+        val gcdFunction = { a: Int, b: Int -> gcd(b.toLong(), a.toLong() % b).toInt() }
+
         val array = listOf(13, 34, 17, 69, 31, 71, 22, 55, 82, 47, 85, 45, 51, 46, 73, 57, 17, 28, 50)
-        val sparseTable = buildSparseTable(array, function)
         val logs = preComputeLogarithms(array.size)
-
-        fun bruteForce(l: Int, r: Int): Int {
-            return array.subList(l, r + 1).max()!!
-        }
-
-        val queries = mapOf(
-            Pair(1, 1) to bruteForce(1, 1),
-            Pair(array.size - 1, array.size - 1) to bruteForce(array.size - 1, array.size - 1),
-            Pair(14, 15) to bruteForce(14, 15),
-            Pair(2, 12) to bruteForce(2, 12),
-            Pair(8, 13) to bruteForce(8, 13),
-            Pair(2, 16) to bruteForce(2, 16),
-            Pair(12, 14) to bruteForce(12, 14),
-            Pair(8, 18) to bruteForce(8, 18)
+        val queries = listOf(
+            Pair(1, 1), Pair(6, 7), Pair(14, 15), Pair(2, 12), Pair(8, 13), Pair(2, 16), Pair(12, 14), Pair(8, 18)
         )
 
-        queries.forEach { (pair, answer) ->
-            val (l, r) = pair
-            assertEquals(answer, processSparseTableQuery(l, r, sparseTable, function, logs))
+        fun runTest(function: (Int, Int) -> Int) {
+            val sparseTable = buildSparseTable(array, function)
+
+            fun bruteForce(l: Int, r: Int): Int {
+                return array.subList(l, r + 1).reduce { acc, num -> function(acc, num) }
+            }
+
+            queries.forEach { (l, r) ->
+                val functionName = when(function) {
+                    maxFunction -> "Max"
+                    minFunction -> "Min"
+                    else -> "GCD"
+                }
+                println("$functionName[$l, $r] = ${processSparseTableQuery(l, r, sparseTable, function, logs)}")
+                assertEquals(bruteForce(l, r), processSparseTableQuery(l, r, sparseTable, function, logs))
+            }
         }
+
+        runTest(maxFunction)
+        runTest(minFunction)
+        runTest(gcdFunction)
     }
 }

@@ -47,9 +47,11 @@ class TestStaticRangeQueries {
             listOf(9, 18, 10, 18) to bruteForce(9, 18, 10, 18)
         )
 
+        val prefixSum = buildPrefixSumGrid(grid)
+
         queries.forEach { (params, answer) ->
             val (x, y, a, b) = params
-            assertEquals(answer, twoDPrefixSum(x, y, a, b, grid))
+            assertEquals(answer, processPrefixSumQuery(x, y, a, b, prefixSum))
         }
     }
 }

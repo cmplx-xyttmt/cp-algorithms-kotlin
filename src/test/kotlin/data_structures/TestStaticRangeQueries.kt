@@ -1,6 +1,7 @@
 package data_structures
 
 import org.junit.Test
+import kotlin.math.max
 import kotlin.test.assertEquals
 
 class TestStaticRangeQueries {
@@ -52,6 +53,34 @@ class TestStaticRangeQueries {
         queries.forEach { (params, answer) ->
             val (x, y, a, b) = params
             assertEquals(answer, processPrefixSumQuery(x, y, a, b, prefixSum))
+        }
+    }
+
+    @Test
+    fun testSparseTableMax() {
+        val function = { a: Int, b: Int -> max(a, b) }
+        val array = listOf(13, 34, 17, 69, 31, 71, 22, 55, 82, 47, 85, 45, 51, 46, 73, 57, 17, 28, 50)
+        val sparseTable = buildSparseTable(array, function)
+        val logs = preComputeLogarithms(array.size)
+
+        fun bruteForce(l: Int, r: Int): Int {
+            return array.subList(l, r + 1).max()!!
+        }
+
+        val queries = mapOf(
+            Pair(1, 1) to bruteForce(1, 1),
+            Pair(array.size - 1, array.size - 1) to bruteForce(array.size - 1, array.size - 1),
+            Pair(14, 15) to bruteForce(14, 15),
+            Pair(2, 12) to bruteForce(2, 12),
+            Pair(8, 13) to bruteForce(8, 13),
+            Pair(2, 16) to bruteForce(2, 16),
+            Pair(12, 14) to bruteForce(12, 14),
+            Pair(8, 18) to bruteForce(8, 18)
+        )
+
+        queries.forEach { (pair, answer) ->
+            val (l, r) = pair
+            assertEquals(answer, processSparseTableQuery(l, r, sparseTable, function, logs))
         }
     }
 }

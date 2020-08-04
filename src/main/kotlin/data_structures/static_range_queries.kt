@@ -38,3 +38,55 @@ fun processPrefixSumQuery(x: Int, y: Int, a: Int, b: Int, prefixSum: Array<IntAr
     val diagonal = if (x - 1 >= 0 && y - 1 >= 0) prefixSum[x - 1][y - 1] else 0
     return whole - left - above + diagonal
 }
+
+/**
+ * Builds a sparse table from an array which can answer range queries of the type function on a static array
+ *
+ * @param array the array of values
+ * @param function the function of the queries. Note: This has to be an idempotent function (see here: https://en.wikipedia.org/wiki/Idempotence)
+ * @return the sparse table
+ */
+fun buildSparseTable(array: List<Int>, function: (Int, Int) -> Int): Array<IntArray>  {
+    val n = array.size
+    val k = ceil(log2(n.toDouble())).toInt()
+
+    val sparseTable = Array(n) { IntArray(k) }
+    for (i in 0 until n) sparseTable[i][0] = function(array[i], array[i])
+
+    for (j in 1..k) {
+        var i = 0
+        while (i + (1 shl j) <= n) {
+            sparseTable[i][j] = function(sparseTable[i][j - 1], sparseTable[i + (1 shl (j - 1))][j - 1])
+            i++
+        }
+    }
+
+    return sparseTable
+}
+
+/**
+ * Computes floor(log2(i)) for i in 1..n
+ *
+ * @param n
+ */
+fun preComputeLogarithms(n: Int): IntArray {
+    val log = IntArray(n + 1)
+    log[1] = 0
+    for (i in 2..n) {
+        log[i] = log[i/2] + 1
+    }
+    return log
+}
+
+/**
+ * Returns the value of function(array[ l ],...,array[ r ]) for the given function
+ * @param l left index
+ * @param r right index
+ * @param sparseTable the sparse table of the array
+ * @param function function of the queries (e.g max, min or gcd). Note: must be idempotent
+ * @return returns the value of the function for the given indices
+ */
+fun processSparseTableQuery(l: Int, r: Int, sparseTable: Array<IntArray>, function: (Int, Int) -> Int, logs: IntArray): Int {
+    val j = logs[r - l + 1]
+    return function(sparseTable[l][j], sparseTable[r - (1 shl j) + 1][j])
+}

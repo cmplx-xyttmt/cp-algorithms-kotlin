@@ -50,7 +50,7 @@ fun buildSparseTable(array: List<Int>, function: (Int, Int) -> Int): Array<IntAr
     val n = array.size
     val k = ceil(log2(n.toDouble())).toInt()
 
-    val sparseTable = Array(n) { IntArray(k) }
+    val sparseTable = Array(n) { IntArray(k + 1) }
     for (i in 0 until n) sparseTable[i][0] = function(array[i], array[i])
 
     for (j in 1..k) {

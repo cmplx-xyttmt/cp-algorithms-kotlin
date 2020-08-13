@@ -16,6 +16,7 @@ class TestSegmentTree {
         val gcdFunction = { a: Int, b: Int -> gcd(b.toLong(), a.toLong()).toInt() }
         val xorFunction = { a: Int, b: Int -> a xor b }
         val orFunction = { a: Int, b: Int -> a or b }
+        val andFunction = { a: Int, b: Int -> a and b }
 
         val array = mutableListOf(13, 34, 17, 69, 31, 71, 22, 55, 82, 47, 85, 45, 51, 46, 73, 57, 17, 28, 50, 47)
 
@@ -50,6 +51,7 @@ class TestSegmentTree {
                     minFunction -> "Min"
                     xorFunction -> "XOR"
                     orFunction -> "OR"
+                    andFunction -> "AND"
                     else -> "GCD"
                 }
                 if (type == 0) {
@@ -68,5 +70,6 @@ class TestSegmentTree {
         runTest(gcdFunction, 0)
         runTest(xorFunction, 0)
         runTest(orFunction, 0)
+        runTest(andFunction, Int.MAX_VALUE)
     }
 }

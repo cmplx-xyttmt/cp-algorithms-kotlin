@@ -129,7 +129,7 @@ fun modPow(x: Long, n: Int, m: Long): Long {
     if (n == 0) return 1 % m
     var u = modPow(x, n / 2, m)
     u = (u * u) % m
-    if (n % 2 == 1) u = (u * x) % m
+    if (n % 2 == 1) u = (u * (x % m)) % m
     return u
 }
 

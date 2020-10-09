@@ -142,5 +142,30 @@ fun modInverse(x: Long, m: Long): Long {
     return modPow(x, eulerTotient(m).toInt() - 1, m)
 }
 
+/**
+ * Returns all divisors of a number n
+ */
+fun allDivisors(n: Long): List<Long> {
+    val factors = primeFactors(n)
+    val primes = factors.keys.toList().sorted()
+    val divisors = mutableSetOf<Long>()
+
+    fun helper(currNum: Long, index: Int) {
+        if (currNum != 1L) divisors.add(currNum)
+        if (index == factors.size) return
+        var currPow = 1L
+        val prime = primes[index]
+        helper(currNum * currPow, index + 1)
+        for (i in 0 until (factors[prime] ?: 0)) {
+            currPow *= prime
+            helper(currNum * currPow, index + 1)
+        }
+    }
+
+    helper(1, 0)
+    divisors.add(1) // If 1 is to be excluded, remove this line
+    return divisors.toList()
+}
+
 // TODO: Read section on solving equations and chinese remainder theorem.
 //  TODO: Also read this blog (https://codeforces.com/blog/entry/61290) for more info and problems on the same.

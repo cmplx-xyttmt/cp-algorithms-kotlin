@@ -134,4 +134,25 @@ class TestNumberTheory {
             assertEquals((x[i] * modInverse(x[i], m[i])) % m[i], 1)
         }
     }
+
+    @Test
+    fun testDivisors() {
+        val testCases = mapOf<Long, List<Long>>(
+            2L to listOf(1L, 2),
+            3L to listOf(1L, 3),
+            5L to listOf(1L, 5),
+            6L to listOf(1L, 2, 3, 6),
+            4L to listOf(1L, 2, 4),
+            9L to listOf(1L, 3, 9),
+            12L to listOf(1L, 2, 3, 4, 6, 12),
+            14L to listOf(1L, 2, 7, 14),
+            36L to listOf(1L, 2, 3, 4, 6, 9, 12, 18, 36),
+            60L to listOf(1L, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60),
+            180L to listOf(1L, 2, 3, 4, 5, 6, 9, 10, 12, 15, 18, 20, 30, 36, 45, 60, 90, 180),
+            63L to listOf(1L, 3, 7, 9, 21, 63)
+        )
+        testCases.forEach { (n, ans) ->
+            assertEquals(ans, allDivisors(n).sorted())
+        }
+    }
 }

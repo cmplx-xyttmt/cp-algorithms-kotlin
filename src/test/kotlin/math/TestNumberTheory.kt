@@ -137,7 +137,7 @@ class TestNumberTheory {
 
     @Test
     fun testDivisors() {
-        val testCases = mapOf<Long, List<Long>>(
+        val testCases = mapOf(
             2L to listOf(1L, 2),
             3L to listOf(1L, 3),
             5L to listOf(1L, 5),

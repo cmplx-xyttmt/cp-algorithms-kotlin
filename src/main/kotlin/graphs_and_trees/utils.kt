@@ -11,14 +11,14 @@ package graphs_and_trees
  *                                                      x_(m - 1) y_(m - 1)
  * @return the diameter of the tree
  */
-fun readGraph(graphString: String): Graph {
+fun readGraph(graphString: String): Tree {
     val lines = graphString.split("\n")
     val params = lines[0].split(" ").map { it.toInt() }
     val n = params[0]
     var m = n - 1
     if (params.size > 1) m = params[1]
 
-    val graph = Graph(n)
+    val graph = Tree(n)
     for (i in 1..m) {
         val (u, v) = lines[i].split(" ").map { it.toInt() }
         graph.addEdge(u - 1, v - 1)

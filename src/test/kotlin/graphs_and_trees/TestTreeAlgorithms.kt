@@ -18,4 +18,29 @@ class TestTreeAlgorithms {
             assertEquals(diameter, treeDiameter(tree))
         }
     }
+
+    @Test
+    fun testKthAncestor() {
+        val tree = Tree(10)
+        val parents = mutableListOf(1, 2, 1, 3, 3, 3, 1, 3, 5)
+        for (i in parents.indices) tree.addParent(parents[i], i + 2)
+        tree.preprocess()
+
+        val queriesToAns = mutableMapOf(
+            Pair(1, 1) to -1,
+            Pair(2, 1) to 1,
+            Pair(8, 1) to 1,
+            Pair(8, 1) to 1,
+            Pair(3, 1) to 2,
+            Pair(5, 3) to 1,
+            Pair(5, 1) to 3,
+            Pair(8, 1) to 1,
+            Pair(8, 1) to 1,
+            Pair(6, 3) to 1
+        )
+
+        queriesToAns.forEach { (query, ans) ->
+            assertEquals(ans, tree.kthAncestor(query.first, query.second))
+        }
+    }
 }

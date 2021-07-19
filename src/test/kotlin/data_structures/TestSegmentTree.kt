@@ -45,17 +45,17 @@ class TestSegmentTree {
             }
 
             queries.forEach { (type, l, rx) ->
-                val functionName = when (function) {
-                    sumFunction -> "Sum"
-                    maxFunction -> "Max"
-                    minFunction -> "Min"
-                    xorFunction -> "XOR"
-                    orFunction -> "OR"
-                    andFunction -> "AND"
-                    else -> "GCD"
-                }
+//                val functionName = when (function) {
+//                    sumFunction -> "Sum"
+//                    maxFunction -> "Max"
+//                    minFunction -> "Min"
+//                    xorFunction -> "XOR"
+//                    orFunction -> "OR"
+//                    andFunction -> "AND"
+//                    else -> "GCD"
+//                }
                 if (type == 0) {
-                    println("$functionName[$l, $rx] = ${segmentTree.rangeQuery(l, rx)}")
+//                    println("$functionName[$l, $rx] = ${segmentTree.rangeQuery(l, rx)}")
                     assertEquals(bruteForce(l, rx), segmentTree.rangeQuery(l, rx))
                 } else {
                     arr[l] = rx
